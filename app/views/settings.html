@@ -1,1 +1,63 @@
-<p>The settings will go here.</p>
+<form name="settingForm" class="setting-form container clearfix" ng-submit="saveSettings()">
+  <div class="row">
+    <div class="col-md-3">
+      <label>Rows</label>
+    </div>
+    <div class="col-md-3">
+      <input name="rows" type="number" ng-model="rows" required class="pull-left form-control" min="1" step="1">
+    </div>
+    <span ng-show="settingForm.rows.$error.required" class="small">
+      This setting is mandatory for game
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <label>Cols</label>
+    </div>
+    <div class="col-md-3">
+      <input name="cols" type="number" ng-model="cols" required class="pull-left form-control" min="1" step="1">
+    </div>
+    <span ng-show="settingForm.cols.$error.required" class="small">
+      This setting is mandatory for game
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <label>Attempts</label>
+    </div>
+    <div class="col-md-3">
+      <input name="attempts" type="number" ng-model="attempts" required class="pull-left form-control" min="1" step="1">
+    </div>
+    <span ng-show="settingForm.attempts.$error.required" class="small">
+      This setting is mandatory for game
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <label>Count</label>
+    </div>
+    <div class="col-md-3">
+      <input name="count" type="number" ng-model="count" required class="pull-left form-control" min="1" step="1">
+    </div>
+    <span ng-show="settingForm.count.$error.required" class="small">
+      This setting is mandatory for game
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <label>Time Period</label>
+    </div>
+    <div class="col-md-3">
+      <input name="time" type="number" ng-model="time" required class="pull-left form-control" min="1" step="1">
+    </div>
+    <span ng-show="settingForm.time.$error.required" class="small">
+      This setting is mandatory for game
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button type="submit" ng-if="settingForm.$valid"  class="btn btn-primary">Update</button>
+      <button type="submit" class="btn btn-default">Cancel</button>
+    </div>
+  </div>
+</form>
