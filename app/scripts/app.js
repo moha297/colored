@@ -15,9 +15,13 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'LocalStorageModule'
   ])
-  .config(function ($routeProvider) {
+  .config(function($routeProvider, localStorageServiceProvider) {
+
+    localStorageServiceProvider.setPrefix('ca-settings');
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -27,7 +31,12 @@ angular
       .when('/settings', {
         templateUrl: 'views/settings.html',
         controller: 'SettingsCtrl',
-        controllerAs: 'settings'
+        controllerAs: 'settings',
+        resolve:{
+          gameSettings: function(gameSettingService){
+            return gameSettingService.getAllSettings();
+          }
+        }
       })
       .otherwise({
         redirectTo: '/'

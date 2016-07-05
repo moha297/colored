@@ -2,12 +2,17 @@
 
 /**
  * @ngdoc function
- * @name coloredApp.controller:SettingCtrl
+ * @name coloredApp.controller:SettingsCtrl
  * @description
- * # SettingCtrl
+ * # SettingsCtrl
  * Controller of the coloredApp
  */
 angular.module('coloredApp')
-  .controller('SettingCtrl', function () {
-
+  .controller('SettingsCtrl', function ($scope, gameSettings) {
+    debugger;
+    this.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
+    ];
   });
