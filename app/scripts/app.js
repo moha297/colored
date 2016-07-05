@@ -26,7 +26,12 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        controllerAs: 'main',
+        resolve:{
+          gameSettings: function(gameSettingService){
+            return gameSettingService.getAllSettings();
+          }
+        }
       })
       .when('/settings', {
         templateUrl: 'views/settings.html',

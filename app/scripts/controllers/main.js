@@ -8,6 +8,6 @@
  * Controller of the coloredApp
  */
 angular.module('coloredApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.hello="World";
+  .controller('MainCtrl', function($scope, gameSettings) {
+    $scope.settings = gameSettings;
   });
