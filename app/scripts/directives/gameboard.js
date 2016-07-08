@@ -22,6 +22,10 @@ angular.module('coloredApp')
           cellCount = scope.settings.count,
           currentRandomCells = [];
 
+
+        // true=win and false=lost
+        scope.gameStatus = false;
+
         function generateRandomCells(totalCells, cellCount, currentAvailable) {
           if (!currentAvailable) {
             currentAvailable = [];
@@ -43,8 +47,24 @@ angular.module('coloredApp')
         function validator(cell) {
           // do whatever you want with the cell
           cell.undoSelection();
-          return false;
+          console.log(cell);
+          var index = currentRandomCells.indexOf(cell.customId);
+
+          if (index > -1) {
+            currentRandomCells.splice(index, 1);
+          }
+          console.log(currentRandomCells)
+          if (!currentRandomCells.length) {
+            // No current cells so user won
+            scope.gameStatus = true;
+            return true;
+          } else {
+            return false;
+          }
+
         }
+
+
         scope.validator = validator;
 
         scope.selectedCells = currentRandomCells;
@@ -57,11 +77,12 @@ angular.module('coloredApp')
           //grid data
           var grid = [];
           // cell object class
-          function CellObj(r, c) {
+          function CellObj(r, c, customId) {
             var row = r,
               col = c,
               selected = false,
-              color;
+              color,
+              id = customId;
 
             function setDefaultColor() {
               color = "white";
@@ -70,7 +91,7 @@ angular.module('coloredApp')
 
             // make things private and expose methods out
             return {
-              row:row,
+              customId: id,
               getRow: function() {
                 return row;
               },
@@ -86,7 +107,7 @@ angular.module('coloredApp')
                 setDefaultColor();
                 return this;
               },
-              getColor:function(){
+              getColor: function() {
                 return color;
               },
               setColor: function(c) {
@@ -103,20 +124,25 @@ angular.module('coloredApp')
           for (var i = 0; i < rows; i++) {
             grid[i] = [];
             for (var j = 0; j < cols; j++) {
-              var cell = new CellObj(i, j);
-              grid[i].push(cell);
-
+              var cell = new CellObj(i, j, counter);
               // set color codes and selection states on cells based on random picking
               if (randomCells.indexOf(counter) > -1) {
                 console.log("randomCells: ", randomCells, " counter: ", counter);
                 // chained it for kicks :)
                 cell.setColor("red").doSelection();
+                cell.id = counter;
               }
+              // Push the cell into grid
+              grid[i].push(cell);
+
               counter++;
             }
           }
           //update scope
           scope.grid = grid;
+
+          // Reset game status
+          scope.gameStatus = false;
 
           //start play
           scope.play();

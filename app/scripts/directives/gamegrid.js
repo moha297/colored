@@ -39,7 +39,7 @@ angular.module('coloredApp')
         });
 
         element.click(function(e) {
-          // We need to run things in angular world
+          // We need to run things in angular world 
           scope.$apply(function() {
             var targetNode = e.target;
             var rowCol = targetNode.id.split(',');
