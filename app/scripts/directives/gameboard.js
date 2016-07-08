@@ -41,9 +41,12 @@ angular.module('coloredApp')
         // game board can have a default validator or a custom validator in future
         // game grid will not decide the game status but the board does it
         function validator(cell) {
+          // do whatever you want with the cell
+          cell.undoSelection();
           return false;
         }
         scope.validator = validator;
+
         scope.selectedCells = currentRandomCells;
         scope.grid = [];
         scope.play = function() {
