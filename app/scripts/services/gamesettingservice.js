@@ -18,10 +18,10 @@ angular.module('coloredApp')
         'count': 5,
         'attempts': 3,
         'time': 5 //in seconds
-      }
+      };
       // AngularJS will instantiate a singleton by calling "new" on this function
     function _getAllSettings() {
-      return $q(function(resolve, reject) {
+      return $q(function(resolve/*, reject*/) {
         currentSettings = localStorageService.get(settingKeyName);
         // if the value is not found - resort to setting a defaultSettings object
         if (!currentSettings) {
@@ -63,5 +63,5 @@ angular.module('coloredApp')
       reset: _reset,
       saveSetting: _saveSetting,
       saveManySettings: _saveManySettings
-    }
+    };
   });

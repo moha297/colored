@@ -86,3 +86,13 @@ body {
   margin-bottom:10px;
   font-size:16px;
 }
+
+.grid-cont{
+  background: rgb(205, 193, 180);
+  width:100%;
+  height:auto;
+}
+
+.grid-cell{
+  border:1px solid;
+}

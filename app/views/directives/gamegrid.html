@@ -1,0 +1,9 @@
+<div style="width:{{gridWidth}}px;">
+  <div ng-repeat="row in matrix">
+    <div ng-repeat="cell in row">
+      <div class="grid-cell pull-left"
+      id="{{cell.getRow()}},{{cell.getCol()}}"
+      style="width:{{dimension}}px;height:{{dimension}}px;background:{{cell.getColor()}}"></div>
+    </div>
+  </div>
+</div>
