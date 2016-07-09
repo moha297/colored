@@ -8,14 +8,14 @@
  * Service in the coloredApp. Saves the scores based on a gamename
  */
 angular.module('coloredApp')
-  .service('scorecardService', function () {
+  .service('scorecardService', function($q, localStorageService) {
     // key used in local storage
     var keyName = 'game_scores';
     //Get all scores
     function _getAllScores() {
-      return $q(function(resolve/*, reject*/) {
+      return $q(function(resolve /*, reject*/ ) {
         // Always fetch data fresh
-        scoreData = localStorageService.get(keyName);
+        var scoreData = localStorageService.get(keyName);
         // if the value is not found - resort to setting a defaultSettings object
         if (!scoreData) {
           //empty score card
@@ -29,26 +29,34 @@ angular.module('coloredApp')
 
     //Get scores for a game
 
-  function _getGameScores(gameName){
-    var scoreData=_getAllScores();
-    if(scoreData[gameName]){
-      return scoreData[gameName];
-    } else {
-      [];
+    function _getGameScores(gameName) {
+      var scoreData = _getAllScores();
+      if (scoreData && scoreData[gameName]) {
+        return scoreData[gameName];
+      } else {
+        return [];
+      }
     }
-  }
 
     //Save score for a game
-    function _saveScore(data, gameName) {
-      if(!data || !gameName){
+    function _saveScore(score, gameName) {
+      if (!score || !gameName) {
         throw "Score data and game name is required";
       }
-      scoreData= _getAllScores();
-      if(!scoreData[gameName]) {
-        scoreData[gameName] = [];
-      }
-      scoreData[gameName].push(data);
-      localStorageService.set(keyName, scoreData);
+      return $q(function(resolve /*, reject*/ ) {
+        _getAllScores().then(function(data) {
+          var scoreData = data;
+          if (!scoreData[gameName]) {
+            scoreData[gameName] = [];
+          }
+          scoreData[gameName].push(score);
+          localStorageService.set(keyName, scoreData);
+          resolve(localStorageService.get(keyName)[gameName]);
+        });
+
+      });
+
+
     }
 
     // This will expose what is needed for the service interface in the  app

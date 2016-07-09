@@ -43,6 +43,11 @@ angular
           }
         }
       })
+      .when('/scoreboard', {
+        templateUrl: 'views/scoreboard.html',
+        controller: 'ScoreboardCtrl',
+        controllerAs: 'scoreboard'
+      })
       .otherwise({
         redirectTo: '/'
       });

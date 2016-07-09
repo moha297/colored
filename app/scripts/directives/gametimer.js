@@ -17,10 +17,13 @@ angular.module('coloredApp')
         timelimit:"=timelimit"
       },
       link: function postLink(scope, element, attrs ) {
-        var timeStart, timeEnd;
+        var timeStart, timeEnd, clock;
         function startCountDown(){
           timeStart = new Date();
-          var clock = $interval(function(){
+          if(clock) {
+            $interval.cancel(clock);
+          }
+          clock = $interval(function(){
             var curTime = new Date();
             var dif = curTime.getTime() - timeStart.getTime()
             if(dif >= 9000) {
@@ -30,15 +33,15 @@ angular.module('coloredApp')
             } else{
               scope.timer = scope.timelimit - dif;
             }
-
           },100)
         }
         scope.$watch('timelimit', function(){
           scope.timer=scope.timelimit;
           startCountDown();
         });
-        scope.$watch('timeout', function(){
-          console.log(scope.timeout);
+
+        scope.$on('$destroy', function(){
+          $interval.cancel(clock);
         });
       }
     };

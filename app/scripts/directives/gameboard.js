@@ -18,10 +18,25 @@ angular.module('coloredApp')
         var rows = scope.settings.rows,
           cols = scope.settings.cols,
           totalCells = rows * cols,
-          // No of cells to be auto selected
-          cellCount = scope.settings.count,
-          currentRandomCells = [];
+          currentRandomCells = [],
+          // We will preserve cells for score and game state persistence
+          generatedRandomCells;
 
+        // Set game name
+        scope.gameName = attrs.gameName;
+
+        function getScore() {
+          return {
+            "win": scope.gameWin,
+            "timestamp": new Date().getTime(),
+            "gameSettings": JSON.stringify(scope.settings),
+            "cells": generatedRandomCells
+          };
+        }
+
+        function saveScore(){
+          scorecardService.saveScore(getScore(), attrs.gameName);
+        }
         // Set the game board for loss
         function setLoss() {
           // No current cells so user won
@@ -29,6 +44,7 @@ angular.module('coloredApp')
           scope.gameLoose = true;
           scope.gameWin = false;
           scope.gameStart = false;
+          saveScore();
         }
 
         // Set the game board for win
@@ -38,6 +54,7 @@ angular.module('coloredApp')
           scope.gameWin = true;
           scope.gameLoose = false;
           scope.gameStart = false;
+          saveScore();
         }
 
         // Set the game board for a fresh start
@@ -55,6 +72,7 @@ angular.module('coloredApp')
             currentAvailable = [];
           }
           if (currentAvailable.length !== cellCount) {
+            cellCount = cellCount - currentAvailable.length;
             while (cellCount > 0) {
               var randomVal = Math.round(Math.random() * (totalCells - 1));
               if (currentAvailable.indexOf(randomVal) === -1) {
@@ -63,6 +81,7 @@ angular.module('coloredApp')
               }
             }
           }
+          generatedRandomCells = JSON.stringify(currentAvailable);
           return currentAvailable;
         }
 
@@ -71,7 +90,6 @@ angular.module('coloredApp')
         function validator(cell) {
           // do whatever you want with the cell
           cell.undoSelection();
-          console.log(cell);
           var index = currentRandomCells.indexOf(cell.customId);
 
           if (index > -1) {
@@ -98,10 +116,10 @@ angular.module('coloredApp')
         scope.gameStart = false;
 
         scope.play = function() {
-          currentRandomCells = generateRandomCells(totalCells, cellCount, currentRandomCells);
+          reset(true);
         };
 
-        function reset() {
+        function reset(preserveRandomCells) {
           //grid data
           var grid = [];
           // cell object class
@@ -144,11 +162,14 @@ angular.module('coloredApp')
               }
             };
           }
-          //currentRandomCells  is reset
-          currentRandomCells = [];
+          if (!preserveRandomCells) {
+            //currentRandomCells  is reset
+            currentRandomCells = [];
+          }
+
 
           var counter = 0,
-            randomCells = generateRandomCells(totalCells, cellCount, currentRandomCells)
+            randomCells = generateRandomCells(totalCells, scope.settings.count, currentRandomCells)
           for (var i = 0; i < rows; i++) {
             grid[i] = [];
             for (var j = 0; j < cols; j++) {
@@ -171,8 +192,6 @@ angular.module('coloredApp')
 
           setFirstStart();
 
-          //start play
-          scope.play();
         }
         scope.reset = reset;
         reset();

@@ -1,7 +1,7 @@
 
   <div class="container">
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-12">
       <div class="pull-right" ng-if="gameStart">
         <game-timer
         timeout="timeOut"
@@ -19,12 +19,10 @@
         validator="validator"></game-grid>
       </div>
       <div class="pull-left tacenter width100">
-      <button ng-click="play()" class="btn btn-primary">Play!</button>
+        <button ng-click="play()" class="btn btn-primary"  ng-disabled="gameStart">Play!</button>
         <button ng-click="reset()" class="btn btn-link">Reset</button>
       </div>
     </div>
-    <div class="col-md-5">
-      <h3>Some Stats</h3>
-    </div>
+
   </div>
 </div>
