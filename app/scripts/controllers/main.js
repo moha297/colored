@@ -3,7 +3,7 @@
 /**
  * @ngdoc function
  * @name coloredApp.controller:MainCtrl
- * @description
+ * @description The game board is living here
  * # MainCtrl
  * Controller of the coloredApp
  */

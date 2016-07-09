@@ -3,7 +3,7 @@
 /**
  * @ngdoc service
  * @name coloredApp.gameSettingService
- * @description
+ * @description Service to save and retrieve game settings
  * # gameSettingService
  * Service in the coloredApp.
  */

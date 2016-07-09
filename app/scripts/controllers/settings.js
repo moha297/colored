@@ -3,7 +3,7 @@
 /**
  * @ngdoc function
  * @name coloredApp.controller:SettingsCtrl
- * @description
+ * @description Settings for the gameboard default. Also persists into local storage
  * # SettingsCtrl
  * Controller of the coloredApp
  */

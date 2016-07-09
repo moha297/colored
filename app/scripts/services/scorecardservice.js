@@ -3,9 +3,9 @@
 /**
  * @ngdoc service
  * @name coloredApp.scorecardService
- * @description
+ * @description Game score keeping. Saves the scores based on a gamename
  * # scorecardService
- * Service in the coloredApp. Saves the scores based on a gamename
+ * Service in the coloredApp.
  */
 angular.module('coloredApp')
   .service('scorecardService', function($q, localStorageService) {

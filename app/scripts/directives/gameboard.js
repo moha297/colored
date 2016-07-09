@@ -89,7 +89,6 @@ angular.module('coloredApp')
           scope.gameWin = false;
           scope.startOption = true;
           scope.gameStart = false;
-          console.log("setting attempts = ",scope.settings.attempts)
           scope.attemptsRemaining = scope.settings.attempts;
         }
 

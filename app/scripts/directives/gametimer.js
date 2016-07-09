@@ -3,7 +3,7 @@
 /**
  * @ngdoc directive
  * @name coloredApp.directive:gameTimer
- * @description
+ * @description Tick tock - the timer lives through this
  * # gameTimer
  */
 angular.module('coloredApp')

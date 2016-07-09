@@ -3,7 +3,7 @@
 /**
  * @ngdoc directive
  * @name coloredApp.directive:gameGrid
- * @description
+ * @description Renders the grid for the game
  * # gameGrid
  */
 angular.module('coloredApp')
