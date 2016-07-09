@@ -1,10 +1,10 @@
-# colored
+# Colored
 
 This is a sample angular app to play a simple game.
-Show a grid
-Random cells are colored
-Click to uncolor them
-Try to beat the timer
+- Show a grid
+- Random cells are colored
+- Click to uncolor them
+- Try to beat the timer
 
 
 
