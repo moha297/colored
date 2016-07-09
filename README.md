@@ -1,12 +1,21 @@
 # colored
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
+This is a sample angular app to play a simple game.
+Show a grid
+Random cells are colored
+Click to uncolor them
+Try to beat the timer
+
+
 
 ## Build & development
 
 Run `grunt` for building and `grunt serve` for preview.
 
-## Testing
+## Production build
+Run `grunt build` and see the dist directory.
 
-Running `grunt test` will run the unit tests with karma.
+
+##credits
+This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
+version 0.15.1.
