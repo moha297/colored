@@ -32,9 +32,10 @@ angular.module('coloredApp')
         // Set game name
         scope.gameName = attrs.gameName;
         scope.timeremaining;
+        scope.attemptsRemaining = 0;
 
+        // Get a score object for current run
         function getScore() {
-          console.log(controller.getLastRemainingTime());
           return {
             "win": scope.gameWin,
             "timestamp": new Date().getTime(),
@@ -44,17 +45,28 @@ angular.module('coloredApp')
           };
         }
 
+        // Trigger a save on the scoreboard
         function saveScore() {
           scorecardService.saveScore(getScore(), attrs.gameName);
         }
+
+
         // Set the game board for loss
         function setLoss() {
           // No current cells so user won
           scope.gameOverlay = true;
-          scope.gameLoose = true;
+          //decrement attempts as the user has just lost
+          scope.attemptsRemaining--;
+          // decide to show a loss overlay vs a try-again overlay
+          if (scope.attemptsRemaining > 0) {
+            scope.tryAgainOption = true;
+          } else {
+            scope.gameLoose = true;
+          }
+
           scope.gameWin = false;
           scope.gameStart = false;
-          saveScore();
+          // no we do not save scores for loosers
         }
 
         // Set the game board for win
@@ -64,6 +76,8 @@ angular.module('coloredApp')
           scope.gameWin = true;
           scope.gameLoose = false;
           scope.gameStart = false;
+          scope.tryAgainOption = false;
+          // We save score to record best times
           saveScore();
         }
 
@@ -75,6 +89,8 @@ angular.module('coloredApp')
           scope.gameWin = false;
           scope.startOption = true;
           scope.gameStart = false;
+          console.log("setting attempts = ",scope.settings.attempts)
+          scope.attemptsRemaining = scope.settings.attempts;
         }
 
         function generateRandomCells(totalCells, cellCount, currentAvailable) {
@@ -84,6 +100,7 @@ angular.module('coloredApp')
           if (currentAvailable.length !== cellCount) {
             cellCount = cellCount - currentAvailable.length;
             while (cellCount > 0) {
+              // randomization
               var randomVal = Math.round(Math.random() * (totalCells - 1));
               if (currentAvailable.indexOf(randomVal) === -1) {
                 currentAvailable.push(randomVal);
@@ -125,9 +142,7 @@ angular.module('coloredApp')
         scope.grid = [];
         scope.gameStart = false;
 
-        scope.play = function() {
-          reset(true);
-        };
+
 
         function reset(preserveRandomCells) {
           // Colors Array
@@ -146,6 +161,9 @@ angular.module('coloredApp')
 
           //grid data
           var grid = [];
+
+
+
           // cell object class
           function CellObj(r, c, customId) {
             var row = r,
@@ -187,14 +205,21 @@ angular.module('coloredApp')
               }
             };
           }
+
+
+
+          // Conditional over-ride the cells selection
           if (!preserveRandomCells) {
             //currentRandomCells  is reset
             currentRandomCells = [];
           }
 
 
+
           var counter = 0,
-            randomCells = generateRandomCells(totalCells, scope.settings.count, currentRandomCells)
+            randomCells = generateRandomCells(totalCells, scope.settings.count, currentRandomCells);
+
+          // Loop through
           for (var i = 0; i < rows; i++) {
             grid[i] = [];
             for (var j = 0; j < cols; j++) {
@@ -215,11 +240,11 @@ angular.module('coloredApp')
           //update scope
           scope.grid = grid;
 
-          setFirstStart();
-
         }
+
+        // expose to template
         scope.reset = reset;
-        reset();
+
 
         scope.startGame = function() {
           scope.gameStart = true;
@@ -229,8 +254,21 @@ angular.module('coloredApp')
           scope.gameLoose = false;
           scope.gameWin = false;
           scope.startOption = false;
-        }
+          scope.tryAgainOption = false;
+        };
 
+        scope.newGame = function() {
+          // Start for once
+          reset();
+          setFirstStart();
+        };
+
+        // play the game
+        scope.play = function() {
+          reset(true);
+          scope.startGame();
+        };
+        scope.newGame();
       }
     };
   }]);

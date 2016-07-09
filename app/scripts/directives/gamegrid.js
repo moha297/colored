@@ -21,15 +21,14 @@ angular.module('coloredApp')
         var availableWidth = element.width();
 
         // value  is expected in pixels but is a number;
-        var cellDimension, cellHeight;
+        var cellDimension;
 
         scope.gridData = [];
         // lets paint the town
         function paint() {
           //assume that the number of columns is same across matrix.
           // @todo - inject validation of grid data
-          var rows = scope.matrix.length,
-            cols = scope.matrix[0].length;
+          var cols = scope.matrix[0].length;
           cellDimension = availableWidth / cols;
           scope.dimension = cellDimension;
         }

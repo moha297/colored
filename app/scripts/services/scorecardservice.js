@@ -33,9 +33,9 @@ angular.module('coloredApp')
       var scoreData = _getAllScores();
       if (scoreData && scoreData[gameName]) {
         return scoreData[gameName];
-      } else {
-        return [];
       }
+      return [];
+
     }
 
     //Save score for a game

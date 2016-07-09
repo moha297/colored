@@ -2,6 +2,9 @@
   <div class="container">
   <div class="row">
     <div class="col-md-12">
+      <div class="pull-left">
+        <h4>Attempts Left: {{attemptsRemaining}}</h4>
+      </div>
       <div class="pull-right" ng-if="gameStart">
         <game-timer
         timeout="timeOut()"
@@ -9,18 +12,24 @@
       </div>
       <div class="pull-left grid-cont">
         <div class="game-start-box" ng-show="startOption">
-          <button ng-click="startGame()" class="btn btn-link">Start Game</button>
+          <h3>Click and uncolor cells before timer runs out</h3><br>
+          <button ng-click="startGame()" class="btn btn-primary btn-sm">Play</button>
+        </div>
+        <div class="game-start-box" ng-show="tryAgainOption">
+          <button ng-click="play()" class="btn btn-link">Try Again</button>
         </div>
         <div class="state-overlay" ng-show="gameOverlay"></div>
         <div class="game-status-win" ng-show="gameWin">You win! <br>Great Job.</div>
-        <div class="game-status-loose" ng-show="gameLoose">Game Over!<br><small>Better luck next time.</small></div>
+        <div class="game-status-loose" ng-show="gameLoose">Game Over!<br>
+          <small>Better luck next time.</small><br>
+          <button ng-click="newGame()" class="btn btn-link">Start New Game</button>
+        </div>
         <game-grid settings
         matrix="grid"
         validator="validator"></game-grid>
       </div>
       <div class="pull-left tacenter width100">
-        <button ng-click="play()" class="btn btn-primary"  ng-disabled="gameStart">Play!</button>
-        <button ng-click="reset()" class="btn btn-link">Reset</button>
+        <button ng-click="newGame()" class="btn btn-link">Start New Game</button>
       </div>
     </div>
 

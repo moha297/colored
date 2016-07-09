@@ -19,7 +19,6 @@ angular.module('coloredApp')
       link: function postLink(scope, element, attrs, controller) {
 
         var timeStart,
-          timeEnd,
           clock,
           limit = scope.timelimit;
 
@@ -33,7 +32,7 @@ angular.module('coloredApp')
             dif = 0;
           }
           return dif;
-        }
+        };
         controller.getTimeTakenTillNow = function() {
           var curTime = new Date();
           var dif = curTime.getTime() - timeStart.getTime();
@@ -44,7 +43,7 @@ angular.module('coloredApp')
             return dif;
           }
 
-        }
+        };
 
         // Trigger the game start as soon as timer is ready to go
         function startCountDown() {
@@ -54,7 +53,7 @@ angular.module('coloredApp')
           }
           clock = $interval(function() {
             var curTime = new Date();
-            var dif = curTime.getTime() - timeStart.getTime()
+            var dif = curTime.getTime() - timeStart.getTime();
             if (dif >= scope.timelimit) {
               scope.timeout();
               $interval.cancel(clock);
@@ -64,7 +63,7 @@ angular.module('coloredApp')
             }
             // Tell the controller if needed
             controller.setLastRemainingTime(dif);
-          }, 100)
+          }, 100);
         }
         //trigger the game
         scope.$watch('timelimit', function() {
