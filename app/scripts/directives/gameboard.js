@@ -131,7 +131,18 @@ angular.module('coloredApp')
 
         function reset(preserveRandomCells) {
           // Colors Array
-          var colors = ['rgb(75,166,210)','rgb(219,104,167)','rgb(160,173,56)','rgb(229,121,37)','rgb(120,147,141)','rgb(214,166,40)','rgb(232,153,118)','rgb(113,103,174)','rgb(37,140,135)','rgb(223,65,37)'];
+          var colors = [
+            'rgb(75,166,210)',
+            'rgb(219,104,167)',
+            'rgb(160,173,56)',
+            'rgb(229,121,37)',
+            'rgb(120,147,141)',
+            'rgb(214,166,40)',
+            'rgb(232,153,118)',
+            'rgb(113,103,174)',
+            'rgb(37,140,135)',
+            'rgb(223,65,37)'
+          ];
 
           //grid data
           var grid = [];
