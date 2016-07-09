@@ -7,40 +7,73 @@
  * # gameTimer
  */
 angular.module('coloredApp')
-  .directive('gameTimer', ['$interval',function ($interval) {
-
+  .directive('gameTimer', ['$interval', function($interval) {
     return {
       templateUrl: 'views/directives/gametimer.html',
       restrict: 'E',
-      scope:{
-        timeout:"=timeout",
-        timelimit:"=timelimit"
+      require: '^gameBoard',
+      scope: {
+        timeout: "&timeout",
+        timelimit: "=timelimit"
       },
-      link: function postLink(scope, element, attrs ) {
-        var timeStart, timeEnd, clock;
-        function startCountDown(){
+      link: function postLink(scope, element, attrs, controller) {
+
+        var timeStart,
+          timeEnd,
+          clock,
+          limit = scope.timelimit;
+
+
+        // Add communication interface to the controller layer
+        controller.getLastRemainingTime = function() {
+          var curTime = new Date();
+          var dif = curTime.getTime() - timeStart.getTime();
+          //:P
+          if (dif >= limit) {
+            dif = 0;
+          }
+          return dif;
+        }
+        controller.getTimeTakenTillNow = function() {
+          var curTime = new Date();
+          var dif = curTime.getTime() - timeStart.getTime();
+          //:P
+          if (dif >= limit) {
+            return limit;
+          } else {
+            return dif;
+          }
+
+        }
+
+        // Trigger the game start as soon as timer is ready to go
+        function startCountDown() {
           timeStart = new Date();
-          if(clock) {
+          if (clock) {
             $interval.cancel(clock);
           }
-          clock = $interval(function(){
+          clock = $interval(function() {
             var curTime = new Date();
             var dif = curTime.getTime() - timeStart.getTime()
-            if(dif >= 9000) {
+            if (dif >= scope.timelimit) {
               scope.timeout();
               $interval.cancel(clock);
-              scope.timer  =0;
-            } else{
+              scope.timer = 0;
+            } else {
               scope.timer = scope.timelimit - dif;
             }
-          },100)
+            // Tell the controller if needed
+            controller.setLastRemainingTime(dif);
+          }, 100)
         }
-        scope.$watch('timelimit', function(){
-          scope.timer=scope.timelimit;
+        //trigger the game
+        scope.$watch('timelimit', function() {
+          scope.timer = scope.timelimit;
           startCountDown();
         });
 
-        scope.$on('$destroy', function(){
+        //cleanup
+        scope.$on('$destroy', function() {
           $interval.cancel(clock);
         });
       }

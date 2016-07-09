@@ -46,7 +46,12 @@ angular
       .when('/scoreboard', {
         templateUrl: 'views/scoreboard.html',
         controller: 'ScoreboardCtrl',
-        controllerAs: 'scoreboard'
+        controllerAs: 'scoreboard',
+        resolve:{
+          scoreBoard: function(scorecardService){
+            return scorecardService.getAllScores();
+          }
+        }
       })
       .otherwise({
         redirectTo: '/'

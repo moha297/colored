@@ -8,13 +8,20 @@
  */
 angular.module('coloredApp')
   .directive('gameBoard', ['scorecardService', function(scorecardService) {
+    function GameBoardController(scope) {
+      // Just a communication interface from gameTimer
+      this.setLastRemainingTime = function(t) {
+        scope.lastRemainingTime = t;
+      }
+    }
     return {
       templateUrl: 'views/directives/gameboard.html',
       restrict: 'E',
       scope: {
         settings: "=settings"
       },
-      link: function postLink(scope, element, attrs) {
+      controller: ['$scope', GameBoardController],
+      link: function postLink(scope, element, attrs, controller) {
         var rows = scope.settings.rows,
           cols = scope.settings.cols,
           totalCells = rows * cols,
@@ -24,17 +31,20 @@ angular.module('coloredApp')
 
         // Set game name
         scope.gameName = attrs.gameName;
+        scope.timeremaining;
 
         function getScore() {
+          console.log(controller.getLastRemainingTime());
           return {
             "win": scope.gameWin,
             "timestamp": new Date().getTime(),
             "gameSettings": JSON.stringify(scope.settings),
-            "cells": generatedRandomCells
+            "cells": generatedRandomCells,
+            "timeTaken": controller.getTimeTakenTillNow()
           };
         }
 
-        function saveScore(){
+        function saveScore() {
           scorecardService.saveScore(getScore(), attrs.gameName);
         }
         // Set the game board for loss
@@ -120,6 +130,9 @@ angular.module('coloredApp')
         };
 
         function reset(preserveRandomCells) {
+          // Colors Array
+          var colors = ['rgb(75,166,210)','rgb(219,104,167)','rgb(160,173,56)','rgb(229,121,37)','rgb(120,147,141)','rgb(214,166,40)','rgb(232,153,118)','rgb(113,103,174)','rgb(37,140,135)','rgb(223,65,37)'];
+
           //grid data
           var grid = [];
           // cell object class
@@ -156,8 +169,9 @@ angular.module('coloredApp')
               getColor: function() {
                 return color;
               },
-              setColor: function(c) {
-                color = c;
+              setRandomColor: function() {
+                var index = Math.round(Math.random() * (colors.length - 1))
+                color = colors[index];
                 return this;
               }
             };
@@ -178,7 +192,7 @@ angular.module('coloredApp')
               if (randomCells.indexOf(counter) > -1) {
                 console.log("randomCells: ", randomCells, " counter: ", counter);
                 // chained it for kicks :)
-                cell.setColor("red").doSelection();
+                cell.setRandomColor().doSelection();
                 cell.id = counter;
               }
               // Push the cell into grid

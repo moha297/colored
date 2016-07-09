@@ -98,6 +98,10 @@ body {
   width:100%;
 }
 
+.paddingSmall{
+  padding: 5px;
+}
+
 /*Common classes ends*/
 .setting-form .row {
   margin-bottom: 10px;

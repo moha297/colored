@@ -1,1 +1,22 @@
-<p>This is the scoreboard view.</p>
+<h2 >Score Board</h2>
+
+  <div ng-repeat="(key,value) in scoreBoard as game">
+    <h3 class="game-name">Game Name:{{key}}</h3>
+    <table border="1">
+      <tr>
+        <td class="paddingSmall"><h4>Game Status</h4></td>
+        <td class="paddingSmall"><h4>Game Setting</h4></td>
+        <td class="paddingSmall"><h4>Highlighted Cells</h4></td>
+        <td class="paddingSmall"><h4>Time Taken (in milliSeconds)</h4></td>
+      </tr>
+      <tr ng-repeat="score in value">
+        <td class="paddingSmall">
+          <h4 ng-if="score.win">You won</h4>
+          <h4 ng-if="!score.win">You lost</h4>
+        </td>
+        <td class="paddingSmall">{{score.gameSettings}}</td>
+        <td class="paddingSmall">{{score.cells}}</td>
+        <td class="paddingSmall">{{score.timeTaken}}</td>
+      </tr>
+    </table>
+  </div>

@@ -22,7 +22,7 @@ angular.module('coloredApp')
 
         // value  is expected in pixels but is a number;
         var cellDimension, cellHeight;
-        
+
         scope.gridData = [];
         // lets paint the town
         function paint() {

@@ -5,13 +5,10 @@
  * @name coloredApp.controller:ScoreboardCtrl
  * @description
  * # ScoreboardCtrl
- * Controller of the coloredApp
+ * Controller of the coloredApp - Displays scoreboard for all games
  */
 angular.module('coloredApp')
-  .controller('ScoreboardCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('ScoreboardCtrl', function ($scope, scoreBoard) {
+    $scope.scoreBoard = scoreBoard;
+    
   });
