@@ -11,19 +11,18 @@ angular.module('coloredApp')
     return {
       templateUrl: 'views/directives/gamegrid.html',
       restrict: 'E',
+      replace:true,
       scope: {
         matrix: "=matrix",
         validator: "=validator"
       },
       link: function postLink(scope, element, attrs) {
 
+        var availableWidth = element.width();
 
         // value  is expected in pixels but is a number;
-        var cellDimension, cellHeight, gridWidth = attrs['width'];
-        if (!parseInt(gridWidth)) {
-          throw "Grid Width is not a number";
-        }
-        scope.gridWidth = gridWidth;
+        var cellDimension, cellHeight;
+        
         scope.gridData = [];
         // lets paint the town
         function paint() {
@@ -31,15 +30,17 @@ angular.module('coloredApp')
           // @todo - inject validation of grid data
           var rows = scope.matrix.length,
             cols = scope.matrix[0].length;
-          cellDimension = gridWidth / cols;
+          cellDimension = availableWidth / cols;
           scope.dimension = cellDimension;
         }
+
+        // Paint when data is ready
         scope.$watch('matrix', function(newValue, oldValue) {
           paint();
         });
 
         element.click(function(e) {
-          // We need to run things in angular world 
+          // We need to run things in angular world
           scope.$apply(function() {
             var targetNode = e.target;
             var rowCol = targetNode.id.split(',');

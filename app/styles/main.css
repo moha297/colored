@@ -82,17 +82,54 @@ body {
     border-bottom: 0;
   }
 }
+
+
+/*Common classes*/
+.taleft{
+  text-align: left;
+}
+.tacenter{
+  text-align: center;
+}
+.paddingLarge{
+  padding:30px;
+}
+.width100{
+  width:100%;
+}
+
+/*Common classes ends*/
 .setting-form .row {
   margin-bottom: 10px;
   font-size: 16px;
+}
+.game-header{
+  margin:0px 0px 20px 0px;
 }
 .grid-cont {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
+  position: relative;
+}
+.grid-cont .state-overlay {
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: rgba(238, 228, 218, 0.7);
+  position: absolute;
+}
+.grid-cont .game-status-win, .grid-cont .game-status-loose, .grid-cont .game-start-box {
+  position: absolute;
+  width: 100%;
+  top: 23%;
+  font-size: 33px;
+  color: #776e65;
+  z-index: 12;
+  font-weight: bold;
 }
 .game-grid {
-  width:100%;
+  width: 100%;
 }
 .game-grid .grid-row {
   width: 100%;
@@ -101,11 +138,10 @@ body {
 .game-grid .grid-row:first-child {
   border-top: 1px solid #c9c9c9;
 }
-
 .game-grid .grid-row .grid-cell {
   border-right: 1px solid #c9c9c9;
   border-bottom: 1px solid #c9c9c9;
 }
-.game-grid .grid-row .grid-cell:first-child{
+.game-grid .grid-row .grid-cell:first-child {
   border-left: 1px solid #c9c9c9;
 }

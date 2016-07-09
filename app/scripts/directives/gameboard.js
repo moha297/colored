@@ -7,7 +7,7 @@
  * # gameBoard
  */
 angular.module('coloredApp')
-  .directive('gameBoard', function() {
+  .directive('gameBoard', ['scorecardService', function(scorecardService) {
     return {
       templateUrl: 'views/directives/gameboard.html',
       restrict: 'E',
@@ -22,9 +22,33 @@ angular.module('coloredApp')
           cellCount = scope.settings.count,
           currentRandomCells = [];
 
+        // Set the game board for loss
+        function setLoss() {
+          // No current cells so user won
+          scope.gameOverlay = true;
+          scope.gameLoose = true;
+          scope.gameWin = false;
+          scope.gameStart = false;
+        }
 
-        // true=win and false=lost
-        scope.gameStatus = false;
+        // Set the game board for win
+        function setWin() {
+          // No current cells so user won
+          scope.gameOverlay = true;
+          scope.gameWin = true;
+          scope.gameLoose = false;
+          scope.gameStart = false;
+        }
+
+        // Set the game board for a fresh start
+        function setFirstStart() {
+          // Reset game status
+          scope.gameOverlay = true;
+          scope.gameLoose = false;
+          scope.gameWin = false;
+          scope.startOption = true;
+          scope.gameStart = false;
+        }
 
         function generateRandomCells(totalCells, cellCount, currentAvailable) {
           if (!currentAvailable) {
@@ -53,22 +77,26 @@ angular.module('coloredApp')
           if (index > -1) {
             currentRandomCells.splice(index, 1);
           }
-          console.log(currentRandomCells)
           if (!currentRandomCells.length) {
-            // No current cells so user won
-            scope.gameStatus = true;
+            setWin();
             return true;
           } else {
             return false;
           }
-
         }
 
-
+        // Validate on time out and set game status
+        scope.timeOut = function() {
+          if (currentRandomCells.length) {
+            setLoss();
+          }
+        };
+        scope.timeLimit = scope.settings.time * 1000;
         scope.validator = validator;
-
         scope.selectedCells = currentRandomCells;
         scope.grid = [];
+        scope.gameStart = false;
+
         scope.play = function() {
           currentRandomCells = generateRandomCells(totalCells, cellCount, currentRandomCells);
         };
@@ -141,8 +169,7 @@ angular.module('coloredApp')
           //update scope
           scope.grid = grid;
 
-          // Reset game status
-          scope.gameStatus = false;
+          setFirstStart();
 
           //start play
           scope.play();
@@ -150,6 +177,16 @@ angular.module('coloredApp')
         scope.reset = reset;
         reset();
 
+        scope.startGame = function() {
+          scope.gameStart = true;
+
+          // true=win and false=lost
+          scope.gameOverlay = false;
+          scope.gameLoose = false;
+          scope.gameWin = false;
+          scope.startOption = false;
+        }
+
       }
     };
-  });
+  }]);

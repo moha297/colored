@@ -1,15 +1,27 @@
-<div class="container">
+
+  <div class="container">
   <div class="row">
     <div class="col-md-7">
-      <h3>Game Grid</h3>
+      <div class="pull-right" ng-if="gameStart">
+        <game-timer
+        timeout="timeOut"
+        timelimit="timeLimit"></game-timer>
+      </div>
       <div class="pull-left grid-cont">
+        <div class="game-start-box" ng-show="startOption">
+          <button ng-click="startGame()" class="btn btn-link">Start Game</button>
+        </div>
+        <div class="state-overlay" ng-show="gameOverlay"></div>
+        <div class="game-status-win" ng-show="gameWin">You win! <br>Great Job.</div>
+        <div class="game-status-loose" ng-show="gameLoose">Game Over!<br><small>Better luck next time.</small></div>
         <game-grid settings
         matrix="grid"
-        width="300"
         validator="validator"></game-grid>
       </div>
+      <div class="pull-left tacenter width100">
       <button ng-click="play()" class="btn btn-primary">Play!</button>
         <button ng-click="reset()" class="btn btn-link">Reset</button>
+      </div>
     </div>
     <div class="col-md-5">
       <h3>Some Stats</h3>
