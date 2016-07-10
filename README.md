@@ -9,8 +9,10 @@ This is a sample angular app to play a simple game.
 
 
 ## Build & development
+Prerequisite - Node, npm and grunt installed on your machine.
 
-Run `grunt` for building and `grunt serve` for preview.
+Clone the repo and navigate into it. Run `npm install` to get all dependencies.
+Run `grunt` for building and `grunt serve` for preview. `grunt serve` will open the application in your browser.
 
 ## Production build
 Run `grunt build` and see the dist directory.
