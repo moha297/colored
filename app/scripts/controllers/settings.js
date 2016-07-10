@@ -16,6 +16,19 @@ angular.module('coloredApp')
     $scope.time = gameSettings.time;
 
     $scope.saveSettings = function() {
+      var cellCount = $scope.rows * $scope.cols;
+
+      if(cellCount<$scope.count){
+        alert("Number of cells in grid need to be greater than "+$scope.count)
+        return;
+      }
+
+      if(cellCount === 0 ){
+        alert ("Grid should have cells - rows and cols should be more than 0");
+        return;
+      }
+
+
       gameSettingService.saveManySettings({
         rows: $scope.rows,
         cols: $scope.cols,
