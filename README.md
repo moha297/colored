@@ -15,6 +15,11 @@ Run `grunt` for building and `grunt serve` for preview.
 ## Production build
 Run `grunt build` and see the dist directory.
 
+## Relevant urls
+Access the application on local after running `grunt serve` at `http://localhost:9000/#/` to play the game.
+Access game settings at `http://localhost:9000/#/settings`
+
+
 
 ##credits
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
